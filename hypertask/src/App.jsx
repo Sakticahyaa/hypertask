@@ -8,7 +8,9 @@ import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
+import Kanban from "./pages/KanbanBoard";
+import ProjectViewer from "./pages/ProjectViewer";
 import { setOpenSidebar } from "./redux/slices/authSlice";
 import Organization from "./pages/Organization";
 
@@ -19,7 +21,7 @@ function Layout() {
 
   return user ? (
     <div className='w-full h-screen flex flex-col md:flex-row'>
-      <div className='width: 10% h-screen bg-white sticky top-0 hidden md:block'>
+      <div className='width: 10% h-screen sticky top-0 hidden md:block'>
         <Sidebar />
       </div>
 
@@ -95,6 +97,8 @@ function App() {
           <Route index path='/' element={<Navigate to='/dashboard' />} />
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path ='/organization' element={<Organization />} />
+          <Route path='/kanban' element={<Kanban />} />
+          <Route path='/projectviewer' element={<ProjectViewer />} />
         </Route>
 
         <Route path='/log-in' element={<Login />} />
