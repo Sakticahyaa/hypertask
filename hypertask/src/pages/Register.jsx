@@ -183,7 +183,7 @@ const Register = () => {
               type="button"
               label="Sign-in"
               className="w-full py-4 text-xl text-black border border-[#00F5D0] hover:bg-[#00F5D0]"
-              onClick={() => navigate("/login")}
+              onClick={() => navigate("/log-in")}
             />
           </div>
         </form>
