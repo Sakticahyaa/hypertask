@@ -1,10 +1,59 @@
 import React from "react";
-import { MdDashboard, MdSettings, MdListAlt } from "react-icons/md";
-import { CgProfile } from "react-icons/cg";
-import { FaTasks, FaUsers } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import {
+  MdDashboard,
+  MdOutlineAddTask,
+  MdOutlinePendingActions,
+  MdSettings,
+  MdTaskAlt,
+  MdListAlt,
+} from "react-icons/md";
+import { FaTasks, FaTrashAlt, FaUsers } from "react-icons/fa";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { TbLayoutKanban } from "react-icons/tb";
+import { CgProfile } from "react-icons/cg";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation } from "react-router-dom";
+import { setOpenSidebar } from "../redux/slices/authSlice";
+import clsx from "clsx";
+
+const linkData = [
+  {
+    label: "Profile",
+    link: "profile",
+    icon: <FaUsers />,
+  },
+  {
+    label: "Kanban",
+    link: "kanban",
+    icon: <FaTasks />,
+  },
+  {
+    label: "Completed",
+    link: "completed/completed",
+    icon: <MdTaskAlt />,
+  },
+  {
+    label: "Project Viewer",
+    link: "projectviewer",
+    icon: <MdOutlinePendingActions />,
+  },
+  {
+    label: "To Do",
+    link: "todo/todo",
+    icon: <MdOutlinePendingActions />,
+  },
+  {
+    label: "Team",
+    link: "team",
+    icon: <FaUsers />,
+  },
+  {
+    label: "Trash",
+    link: "trashed",
+    icon: <FaTrashAlt />,
+  },
+];
+
 
 const Sidebar = () => {
   const mainMenuItems = [
@@ -37,7 +86,7 @@ const Sidebar = () => {
           fontSize: 30
         }}
       >
-        Analytics
+        HyperTask
       </h1>
       {/* Main Menu Items */}
       <ul className="space-y-4 flex-grow">
