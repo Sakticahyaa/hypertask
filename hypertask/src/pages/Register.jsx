@@ -4,15 +4,24 @@ import { useNavigate } from "react-router-dom";
 import Textbox from "../components/Textbox";
 import Button from "../components/Button";
 import backgroundImage from "../pngs/christina-wocintechchat-com-KAULAzQwxzE-unsplash 1@2x.png";
+import { useRegisterMutation } from "../redux/slices/api/authApiSlice";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const [registerUser, { isLoading }] = useRegisterMutation();
 
-  const onSubmit = (data) => {
-    console.log("Register Data: ", data);
-    // Add registration logic here
-    navigate("/dashboard");
+  const onSubmit = async (data) => {
+    try {
+      const result = await registerUser(data).unwrap(); // Make API call
+      toast.success("Registration successful! Redirecting to dashboard...");
+      console.log("Registered user: ", result);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Registration error: ", error);
+      toast.error(error?.data?.message || "Registration failed!");
+    }
   };
 
   return (
@@ -154,7 +163,8 @@ const Register = () => {
           >
             <Button
               type="submit"
-              label="Register"
+              label={isLoading ? "Registering..." : "Register"}
+              disabled={isLoading}
               className="w-full py-4 text-xl text-black bg-[#00F5D0] hover:bg-[#00d1b2]"
             />
           </div>

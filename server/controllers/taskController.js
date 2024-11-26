@@ -92,7 +92,7 @@ export const createTask  = async (req, res) => {
   
                   await task.save();
   
-                  res.status(200).json({ status: true, message: "Activity psoted successfully"});
+                  res.status(200).json({ status: true, message: "Activity posted successfully"});
                   
                  
                 } catch (error) {

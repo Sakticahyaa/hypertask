@@ -5,23 +5,27 @@ import Textbox from "../components/Textbox";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
 import backgroundImage from "../pngs/christina-wocintechchat-com-KAULAzQwxzE-unsplash 1@2x.png";
+import { useLoginMutation } from "../redux/slices/api/authApiSlice";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
   const navigate = useNavigate();
+  const [login, {isLoading}] = useLoginMutation();
   const user = useSelector((state) => state.user);
 
   // Redirect if already logged in
   useEffect(() => {
-    if (user?.isLoggedIn) {
-      navigate("/dashboard");
-    }
-  }, [user, navigate]);
+    user && navigate("/dashboard");
+  }, [user]);
 
-  const onSubmit = (data) => {
-    console.log("Login Data: ", data);
-    // Add authentication logic here
-    navigate("/dashboard");
+  const submitHandler = async (data) => {
+    try {
+      const result = await login(data);
+      console.log(result);
+    } catch(error) {
+        console.log(error);
+        toast.error(error?.data?.message || error.message);
+    }
   };
 
   return (
@@ -73,7 +77,7 @@ const Login = () => {
 
     <div style={{flex: 1, display: "flex", justifyContent: "center", alignItems: "center",backgroundColor: "transparent"}}>
         <form 
-            onSubmit={handleSubmit(onSubmit)} 
+            onSubmit={handleSubmit(submitHandler)} 
             style={{ 
             width: "100%", 
             maxWidth: "600px", 
@@ -127,7 +131,7 @@ const Login = () => {
                 type="button"
                 label="Sign-up"
                 className="w-full py-4 text-xl text-black border border-[#00F5D0] hover:bg-[#00F5D0]" // Text size increased to `text-xl`
-                onClick={() => navigate("/signup")}
+                onClick={() => navigate("/register")}
             />
             </div>
 
