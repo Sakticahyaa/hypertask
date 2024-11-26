@@ -50,17 +50,6 @@ const ProjectViewer = () => {
       </div>
 
       <Tabs tabs={TABS} setSelected={setSelected}>
-        {!status && (
-          <div className='w-full flex justify-between gap-4 md:gap-x-12 py-4'>
-            <TaskTitle label='To Do' className={TASK_TYPE.todo} />
-            <TaskTitle
-              label='Ongoing'
-              className={TASK_TYPE["in progress"]}
-            />
-            <TaskTitle label='Done' className={TASK_TYPE.completed} />
-          </div>
-        )}
-
         {(
           <div className='w-full'>
             <Table tasks={tasks} />
