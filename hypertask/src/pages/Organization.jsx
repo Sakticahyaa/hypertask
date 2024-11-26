@@ -100,20 +100,16 @@ const Organization = () => {
 
       {/* Modal AddOrganization */}
       {showAddOrganization && (
-        <div 
-          className="fixed inset-0 flex justify-center items-center z-50" // Background hitam dengan opacity
-        >
-          {/* Kontainer Modal */}
-          <div 
+        <div className="fixed inset-0 flex justify-center items-center z-50 bg-black bg-opacity-50">
+          <div
             className="relative bg-white rounded-lg shadow-lg p-6"
             style={{
-              width: '800px',  // Ukuran lebar modal
-              maxWidth: '90%', // Pastikan modal tidak terlalu lebar
-              height: 'auto',  // Tinggi menyesuaikan konten
-              maxHeight: '90vh', // Maksimum tinggi
-              overflowY: 'auto', // Tambahkan scroll jika konten terlalu banyak
-              border: '3px solid #007bff', // Border tebal dengan warna biru
-              boxShadow: '0 4px 8px rgba(0,0,0,0.2)', // Menambah efek bayangan lebih tegas
+              width: '800px',
+              maxWidth: '90%',
+              height: 'auto',
+              maxHeight: '90vh',
+              overflowY: 'auto',
+              border: '3px solid #007bff',
             }}
           >
             <button
@@ -122,7 +118,7 @@ const Organization = () => {
             >
               ×
             </button>
-            <AddOrganization />
+            <AddOrganization onClose={handleCloseAddOrganization} />
           </div>
         </div>
       )}

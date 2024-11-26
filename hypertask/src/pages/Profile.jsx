@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 
 const Profile = () => {
   const [profileImage, setProfileImage] = useState("susilo-1.jpeg");
-  const [profileName, setProfileName] = useState(""); // Default is empty
-  const [email, setEmail] = useState(""); // Default is empty
-  const [dob, setDob] = useState(""); // Default will be set to current date
-  const [position, setPosition] = useState(""); // Default is empty
+  const [profileName, setProfileName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dob, setDob] = useState("");
+  const [position, setPosition] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // Set the default date of birth to the current date
     const currentDate = new Date().toISOString().split("T")[0];
     setDob(currentDate);
   }, []);
@@ -25,11 +25,15 @@ const Profile = () => {
   };
 
   const handleDeleteImage = () => {
-    setProfileImage(null); // This will clear the image
+    setProfileImage(null);
   };
 
-  const handleSave = () => {
-    // For now, we'll just log the data to the console. You can replace this with an API call or other logic.
+  const handleSave = async () => {
+    if (!profileName || !email || !dob || !position) {
+      setMessage("Please fill in all fields before saving.");
+      return;
+    }
+
     const profileData = {
       profileImage,
       profileName,
@@ -37,16 +41,32 @@ const Profile = () => {
       dob,
       position,
     };
-    console.log("Profile saved:", profileData);
+
+    try {
+      const response = await fetch("/api/users", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(profileData),
+      });
+
+      if (response.ok) {
+        setMessage("Profile saved successfully!");
+      } else {
+        setMessage("Failed to save profile. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error while saving profile:", error);
+      setMessage("An error occurred while saving the profile.");
+    }
   };
 
   return (
     <div className="flex justify-center items-center w-screen h-screen bg-gray-50">
       <div className="w-full max-w-3xl p-6 bg-white rounded-lg shadow-lg fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 scale-90">
-        {/* Profile Title */}
         <h2 className="text-3xl font-semibold text-center text-[#0b1220] mb-8">Profile</h2>
 
-        {/* Profile Image Section */}
         <div className="flex justify-center mb-4">
           <img
             src={profileImage || "default-profile-image.jpg"}
@@ -55,7 +75,6 @@ const Profile = () => {
           />
         </div>
 
-        {/* Change and Delete Buttons */}
         <div className="flex justify-between mb-6">
           <button
             className="bg-[#00f5d0] text-[#3b3b3b] py-2 px-4 rounded-md"
@@ -78,7 +97,6 @@ const Profile = () => {
           </button>
         </div>
 
-        {/* Profile Form Sections */}
         <div className="mb-4">
           <label className="block text-gray-600 text-lg mb-2">Profile Name</label>
           <input
@@ -122,7 +140,6 @@ const Profile = () => {
           />
         </div>
 
-        {/* Save Button */}
         <div className="flex justify-center">
           <button
             onClick={handleSave}
@@ -131,6 +148,12 @@ const Profile = () => {
             Save
           </button>
         </div>
+
+        {message && (
+          <div className="mt-4 text-center text-red-500">
+            {message}
+          </div>
+        )}
       </div>
     </div>
   );
