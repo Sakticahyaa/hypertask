@@ -1,5 +1,8 @@
+
+
 import Notice from "../models/notification.js";
 import Task from "../models/task.js";
+
 
 export const createTask  = async (req, res) => {
     try {
@@ -211,7 +214,98 @@ export const getTask  = async (req, res) => {
                   console.log(error);
                   return res.status(400).json({ status: false, message: error.message });
          }
+};
+
+export const createSubTask  = async (req, res) => {
+  try{
+       const {title, tag, date} = req.body;
+       const{id} = req.params;
+
+       const newsSubTask = {
+        title,
+        date,
+        tag,
+       };
+
+       const task = await Task.findById(id);
+       task.subTasks.push(newsSubTask);
+       await task.save();
+
+       res.status(200).json;
+       on({status: true, message:"SubTask added successfully"});
+
+
+         } catch (error) {
+                  console.log(error);
+                  return res.status(400).json({ status: false, message: error.message });
+         }
+};
+
+export const updateTask  = async (req, res) => {
+  try{
+       const{id} = req.params;
+       const{title, date, team,stage, priority, assets} = req.body;
+
+       const task = await Task.findById(id);
+
+        task.title = title;
+        task.date = date;
+        task.priority = priority.toLowerCase();
+        task.assets = assets;
+        task.stage = stage.toLowerCase();
+        task.team = team;
+
+        await task.save();
+        res.status(200).json({status:true, message:"Task duplicated successfully"});
+
+
+         } catch (error) {
+                  console.log(error);
+                  return res.status(400).json({ status: false, message: error.message });
+         }
+};
+export const trashTask  = async (req, res) => {
+  try{
+       const{id} = req.params;
+       const task = await Task.findById(id);
+       task.isTrashed = true;
+       await task.save()
+        res.status(200).json({status:true, message:"Task trashed successfully"});
+        
+
+         } catch (error) {
+                  console.log(error);
+                  return res.status(400).json({ status: false, message: error.message });
+         }
 }
 
+export const deleteRestoreTask  = async (req, res) => {
+  try{
+       const{id} = req.params;
+       const{actionType} = req.query;
+
+      if(actionType==="delete"){
+        await Task.findByIdAndDelete(id);
+        
+      }else if (actionType==="deleteMany"){
+        await Task.deleteMany({isTrashed:true});
+
+      }else if(actionType=="restore"){
+        const resp = await Task.findById(id);
+        resp.isTrashed = false;
+        resp.save()
+      
+      }else if (actionType==="restoreAll"){
+        await Task.updateMany({isTrashed:true}, {$set: {isTrashed:false}});
+      
+        res.status(200).json({status:true, message:"Operation performed successfully"});
+      }
+
+         } catch (error) {
+                  console.log(error);
+                  return res.status(400).json({ status: false, message: error.message });
+         }
+}
+    
 
     
