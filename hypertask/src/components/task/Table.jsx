@@ -1,11 +1,6 @@
 import React, { useState } from "react";
 import { BiMessageAltDetail } from "react-icons/bi";
-import {
-  MdAttachFile,
-  MdKeyboardArrowDown,
-  MdKeyboardArrowUp,
-  MdKeyboardDoubleArrowUp,
-} from "react-icons/md";
+import { MdAttachFile, MdKeyboardArrowDown, MdKeyboardArrowUp, MdKeyboardDoubleArrowUp, MdPerson } from "react-icons/md";
 import { toast } from "sonner";
 import { BGS, PRIOTITYSTYELS, TASK_TYPE, formatDate } from "../../utils";
 import clsx from "clsx";
@@ -32,13 +27,14 @@ const Table = ({ tasks }) => {
   const deleteHandler = () => {};
 
   const TableHeader = () => (
-    <thead className='w-full border-b border-gray-300'>
-      <tr className='w-full text-black  text-left'>
-        <th className='py-2'>Task Title</th>
-        <th className='py-2'>Priority</th>
-        <th className='py-2 line-clamp-1'>Created At</th>
-        <th className='py-2'>Assets</th>
-        <th className='py-2'>Team</th>
+    <thead className='w-full bg-[#3B3B3B] '>
+      <tr className='w-full text-[#00F5D0] text-left '>
+        <th className='py-2 pl-2 '>Project Name</th>
+        <th className='py-2 '>Project Manager</th>
+        <th className='py-2 '>Priority</th>
+        <th className='py-2 '>Deadline</th>
+        <th className='py-2 '>Team</th>
+        <th className='py-2 '></th>
       </tr>
     </thead>
   );
@@ -47,12 +43,19 @@ const Table = ({ tasks }) => {
     <tr className='border-b border-gray-200 text-gray-600 hover:bg-gray-300/10'>
       <td className='py-2'>
         <div className='flex items-center gap-2'>
-          <div
-            className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])}
-          />
+          <div className={clsx("w-4 h-4 rounded-full", TASK_TYPE[task.stage])} />
           <p className='w-full line-clamp-2 text-base text-black'>
             {task?.title}
           </p>
+        </div>
+      </td>
+
+      <td className='py-2'>
+        <div className='flex items-center'>
+          <MdPerson className='mr-1 text-lg text-gray-600' />
+          <span className='text-sm text-gray-600'>
+            {task?.team && task?.team.length > 0 ? task.team[0].name : "No Team"}
+          </span>
         </div>
       </td>
 
@@ -71,23 +74,6 @@ const Table = ({ tasks }) => {
         <span className='text-sm text-gray-600'>
           {formatDate(new Date(task?.date))}
         </span>
-      </td>
-
-      <td className='py-2'>
-        <div className='flex items-center gap-3'>
-          <div className='flex gap-1 items-center text-sm text-gray-600'>
-            <BiMessageAltDetail />
-            <span>{task?.activities?.length}</span>
-          </div>
-          <div className='flex gap-1 items-center text-sm text-gray-600 dark:text-gray-400'>
-            <MdAttachFile />
-            <span>{task?.assets?.length}</span>
-          </div>
-          <div className='flex gap-1 items-center text-sm text-gray-600 dark:text-gray-400'>
-            <FaList />
-            <span>0/{task?.subTasks?.length}</span>
-          </div>
-        </div>
       </td>
 
       <td className='py-2'>
@@ -122,11 +108,12 @@ const Table = ({ tasks }) => {
       </td>
     </tr>
   );
+
   return (
     <>
-      <div className='bg-white  px-2 md:px-4 pt-4 pb-9 shadow-md rounded'>
+      <div className='bg-white px-2 md:px-4 pt-4 pb-9 shadow-md rounded'>
         <div className='overflow-x-auto'>
-          <table className='w-full '>
+          <table className='w-full'>
             <TableHeader />
             <tbody>
               {tasks.map((task, index) => (
@@ -137,7 +124,6 @@ const Table = ({ tasks }) => {
         </div>
       </div>
 
-      {/* TODO */}
       <ConfirmatioDialog
         open={openDialog}
         setOpen={setOpenDialog}

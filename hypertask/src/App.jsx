@@ -12,6 +12,8 @@ import Dashboard from "./pages/Dashboard";
 import Kanban from "./pages/KanbanBoard";
 import ProjectViewer from "./pages/ProjectViewer";
 import { setOpenSidebar } from "./redux/slices/authSlice";
+import Organization from "./pages/Organization";
+import Profile from "./pages/Profile";
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -95,8 +97,10 @@ function App() {
         <Route element={<Layout />}>
           <Route index path='/' element={<Navigate to='/dashboard' />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path ='/organization' element={<Organization />} />
           <Route path='/kanban' element={<Kanban />} />
           <Route path='/projectviewer' element={<ProjectViewer />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
 
         <Route path='/log-in' element={<Login />} />
