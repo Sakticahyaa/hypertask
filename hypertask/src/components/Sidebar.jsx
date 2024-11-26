@@ -59,8 +59,8 @@ const Sidebar = () => {
   const mainMenuItems = [
     { name: "Profile", icon: <CgProfile />, path: "/profile" },
     { name: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
-    { name: "Kanban Board", icon: <TbLayoutKanban />, path: "/kanban-board" },
-    { name: "Project Viewer", icon: <MdListAlt />, path: "/project-viewer" },
+    { name: "Kanban Board", icon: <TbLayoutKanban />, path: "/kanban" },
+    { name: "Project Viewer", icon: <MdListAlt />, path: "/projectviewer" },
     { name: "Organization", icon: <FaUsers />, path: "/organization" },
   ];
 
