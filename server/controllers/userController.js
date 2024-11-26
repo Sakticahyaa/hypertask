@@ -138,10 +138,91 @@ export const updateUserProfile = async (req, res) => {
     }
 };
 
-// export const getTeamList = async (req, res) => {
-//     try {
-//         
-//     } catch (error) {
-//         return res.status(400).json({status: false, message: error.message});
-//     }
-// };
+export const markNotificationRead = async (req, res) => {
+ try {
+      const {userId} = req.user;
+      const {isReadType, id} = req.query;
+      if (isReadType==="all"){
+        await Notice.updateMany9(
+            {team: userId, isRead:{$nin: [userId] }},
+            {$push: {isRead: userId}},
+            {new: true}
+        );
+    } else{
+        await Notice.findOneandUpdate(
+            {_id:id, isRead: {$nin: [userId]} },
+            {$push : {isRead: userId}},
+            {new: true}
+        )
+    }
+    
+    
+}catch (error) {
+       return res.status(400).json({status: false, message: error.message});
+     }
+ };
+
+export const changeUserPassword = async (req, res) => {
+  try {
+    const {userId} = req.user;
+    const user = await User.findById(userId);
+
+    if (user){
+        user.password = req.body.password;
+        await user.save()
+        user.password = undefined;
+        res.status(201).json({
+            status: true,
+            message: "Password changed successfully"
+        
+        });
+    }
+     } catch (error) {
+        return res.status(400).json({status: false, message: error.message});
+    }
+ };
+
+ export const activateUserProfile = async (req, res) => {
+    try {
+      const { id } = req.params; 
+      const user = await User.findById(id); 
+  
+      if (user) {
+        user.isActive = req.body.isActive; 
+        await user.save(); 
+        
+        res.status(200).json({
+          status: true,
+          message: `User account has been ${
+            user.isActive ? "activated" : "disabled"
+          }`,
+        });
+      } else {
+        res.status(404).json({ status: false, message: "User not found" });
+      }
+    } catch (error) {
+      
+      res.status(400).json({ status: false, message: error.message });
+    }
+  };
+  
+   export const deleteUserProfileUserProfile = async (req, res) => {
+    try {
+        const { id } = req.params; 
+        await User.findByIdAndDelete(id); 
+    
+        if (user) {
+          user.isActive = req.body.isActive; 
+          await user.save(); 
+          
+          res.status(200).json({
+            status: true,
+            message: "User deleted successfully"
+           
+          });
+        } 
+      } catch (error) {
+        
+        res.status(400).json({ status: false, message: error.message });
+      }
+    };
