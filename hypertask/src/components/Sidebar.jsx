@@ -7,12 +7,15 @@ import { IoMdHelpCircleOutline } from "react-icons/io";
 import { TbLayoutKanban } from "react-icons/tb";
 
 const Sidebar = () => {
-  const menuItems = [
+  const mainMenuItems = [
     { name: "Profile", icon: <CgProfile />, path: "/profile" },
     { name: "Dashboard", icon: <MdDashboard />, path: "/dashboard" },
     { name: "Kanban Board", icon: <TbLayoutKanban />, path: "/kanban-board" },
     { name: "Project Viewer", icon: <MdListAlt />, path: "/project-viewer" },
     { name: "Organization", icon: <FaUsers />, path: "/organization" },
+  ];
+
+  const bottomMenuItems = [
     { name: "Help", icon: <IoMdHelpCircleOutline />, path: "/help" },
     { name: "Settings", icon: <MdSettings />, path: "/settings" },
   ];
@@ -28,17 +31,37 @@ const Sidebar = () => {
     >
       <h1
         className="text-xl font-bold mb-6"
-        style={{ color: "#00F5D0" }}
+        style={{
+          marginTop: "20px",
+          color: "#00F5D0",
+          fontSize: 30
+        }}
       >
         Analytics
       </h1>
-      <ul className="space-y-4">
-        {menuItems.map((item, index) => (
+      {/* Main Menu Items */}
+      <ul className="space-y-4 flex-grow">
+        {mainMenuItems.map((item, index) => (
           <li key={index}>
             <Link
               to={item.path}
               className="flex items-center gap-4 p-2 hover:bg-gray-700 rounded-md"
-              style={{ color: "white" }}
+              style={{ fontSize: "20px", color: "white" }}
+            >
+              {item.icon}
+              <span>{item.name}</span>
+            </Link>
+          </li>
+        ))}
+      </ul>
+      {/* Bottom Menu Items */}
+      <ul className="space-y-4 mt-auto">
+        {bottomMenuItems.map((item, index) => (
+          <li key={index}>
+            <Link
+              to={item.path}
+              className="flex items-center gap-4 p-2 hover:bg-gray-700 rounded-md"
+              style={{ fontSize: "20px", color: "white" }}
             >
               {item.icon}
               <span>{item.name}</span>
