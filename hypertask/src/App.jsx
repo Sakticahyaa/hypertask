@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Dashboard from "./pages/dashboard";
 import { setOpenSidebar } from "./redux/slices/authSlice";
+import Organization from "./pages/Organization";
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -93,6 +94,7 @@ function App() {
         <Route element={<Layout />}>
           <Route index path='/' element={<Navigate to='/dashboard' />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path ='/organization' element={<Organization />} />
         </Route>
 
         <Route path='/log-in' element={<Login />} />
