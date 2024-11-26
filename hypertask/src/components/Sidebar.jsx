@@ -5,7 +5,6 @@ import { FaTasks, FaUsers } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoMdHelpCircleOutline } from "react-icons/io";
 import { TbLayoutKanban } from "react-icons/tb";
-import clsx from "clsx";
 
 const Sidebar = () => {
   const menuItems = [
@@ -19,14 +18,27 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="bg-gray-800 text-white w-64 h-screen p-4 flex flex-col">
-      <h1 className="text-teal-400 text-xl font-bold mb-6">Analytics</h1>
+    <div
+      className="w-64 h-screen p-4 flex flex-col"
+      style={{
+        backgroundColor: "#3B3B3B",
+        borderTopRightRadius: "20px",
+        borderBottomRightRadius: "20px",
+      }}
+    >
+      <h1
+        className="text-xl font-bold mb-6"
+        style={{ color: "#00F5D0" }}
+      >
+        Analytics
+      </h1>
       <ul className="space-y-4">
         {menuItems.map((item, index) => (
           <li key={index}>
             <Link
               to={item.path}
               className="flex items-center gap-4 p-2 hover:bg-gray-700 rounded-md"
+              style={{ color: "white" }}
             >
               {item.icon}
               <span>{item.name}</span>
