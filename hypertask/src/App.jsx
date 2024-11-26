@@ -8,7 +8,9 @@ import { Toaster } from "sonner";
 import Sidebar from "./components/Sidebar";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-import Dashboard from "./pages/dashboard";
+import Dashboard from "./pages/Dashboard";
+import Kanban from "./pages/KanbanBoard";
+import ProjectViewer from "./pages/ProjectViewer";
 import { setOpenSidebar } from "./redux/slices/authSlice";
 
 function Layout() {
@@ -93,6 +95,8 @@ function App() {
         <Route element={<Layout />}>
           <Route index path='/' element={<Navigate to='/dashboard' />} />
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/kanban' element={<Kanban />} />
+          <Route path='/projectviewer' element={<ProjectViewer />} />
         </Route>
 
         <Route path='/log-in' element={<Login />} />
