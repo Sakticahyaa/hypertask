@@ -13,6 +13,7 @@ import Kanban from "./pages/KanbanBoard";
 import ProjectViewer from "./pages/ProjectViewer";
 import { setOpenSidebar } from "./redux/slices/authSlice";
 import Organization from "./pages/Organization";
+import Profile from "./pages/Profile";
 
 function Layout() {
   const { user } = useSelector((state) => state.auth);
@@ -99,6 +100,7 @@ function App() {
           <Route path ='/organization' element={<Organization />} />
           <Route path='/kanban' element={<Kanban />} />
           <Route path='/projectviewer' element={<ProjectViewer />} />
+          <Route path='/profile' element={<Profile />} />
         </Route>
 
         <Route path='/log-in' element={<Login />} />
