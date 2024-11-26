@@ -34,13 +34,12 @@ const AddOrganization = ({ onClose }) => {
           >
             Division
           </label>
-          <select
+          <input
             id="division"
+            type="text"
+            placeholder="Enter division"
             className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="Internal">Internal Division</option>
-            <option value="External">External Division</option>
-          </select>
+          />
         </div>
 
         {/* Position */}
@@ -51,13 +50,12 @@ const AddOrganization = ({ onClose }) => {
           >
             Position
           </label>
-          <select
+          <input
             id="position"
+            type="text"
+            placeholder="Enter position"
             className="w-full p-2 mt-1 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          >
-            <option value="Staff">Internal Staff</option>
-            <option value="Manager">Manager</option>
-          </select>
+          />
         </div>
 
         {/* Submit Button */}
